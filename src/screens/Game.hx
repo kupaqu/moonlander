@@ -1,10 +1,12 @@
 package screens;
 
+import h2d.Camera;
 import entities.*;
 
 class Game extends Screen {
     var lander: Lander;
     var ground: Ground;
+    var cam: h2d.Camera;
 
     public function new(app: Main) {
         super(app);

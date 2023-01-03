@@ -13,6 +13,8 @@ class Lander extends h2d.Bitmap {
         super(hxd.Res.loader.load('ufo.png').toTile(), parent);
         tile.dx -= tile.width/2;
         tile.dy -= tile.height/2;
+        x = hxd.Window.getInstance().width / 2;
+        y = hxd.Window.getInstance().height / 2;
     }
 
     public function update(dt: Float) {

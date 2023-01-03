@@ -2,7 +2,7 @@ package entities;
 
 import screens.*;
 
-class Ground {
+class Ground extends h2d.Graphics {
 
     var perlin = new hxd.Perlin();
     var seed: Int;
@@ -10,8 +10,10 @@ class Ground {
     var segments: Array<CustomSegment>;
 
     public function new(parent: Screen) {
+        super(parent);
         seed = Random.int(0, 1000);
         generateGround(parent);
+        y = 300;
     }
 
     private function generateGround(parent: Screen) {
@@ -20,8 +22,8 @@ class Ground {
         // генерация точек по высоте
         var points = [];
         for (i in 0...numOfSegments+1) {
-            var y = ((perlin.perlin1D(seed, i/(numOfSegments/10), 3))+1)/2;
-            points.push(y);
+            var h = ((perlin.perlin1D(seed, i/(numOfSegments/10), 3))+1)/2;
+            points.push(h);
         }
         
         // генерация посадочных мест
@@ -45,8 +47,11 @@ class Ground {
 
     public function update(dt: Float) {
         var size = Random.float(.5, 2.);
+        clear();
+        lineStyle(size, 0xD1CBCB);
         for (segment in segments) {
-            segment.update(dt, size);
-        }
+            moveTo(segment.x1, segment.y1);
+            lineTo(segment.x2, segment.y2);
+        };
     }
 }

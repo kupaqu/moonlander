@@ -2,16 +2,13 @@ package entities;
 
 import screens.*;
 
-class CustomSegment extends h2d.Graphics {
-    var segment: h2d.col.Segment;
-    var x1: Float;
-    var y1: Float;
-    var x2: Float;
-    var y2: Float;
+class CustomSegment {
+    public var x1: Float;
+    public var y1: Float;
+    public var x2: Float;
+    public var y2: Float;
 
-    public function new(parent: Screen, x1: Float, y1: Float, x2: Float, y2: Float) {
-        super(parent);
-        
+    public function new(parent: Screen, x1: Float, y1: Float, x2: Float, y2: Float) {        
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -27,11 +24,7 @@ class CustomSegment extends h2d.Graphics {
         return false;
     }
     
-    public function update(dt: Float, size: Float) {
-        clear();
-        lineStyle(size, 0xD1CBCB);
-        moveTo(x1, y1);
-        lineTo(x2, y2);
+    public function update(dt: Float) {
     }
 
 }
