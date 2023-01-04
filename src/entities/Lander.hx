@@ -6,7 +6,6 @@ class Lander extends h2d.Bitmap {
     var g: Float = 9.8;
     var vy: Float;
     var vx: Float;
-
     var poly: h2d.col.Polygon;
 
     var p: h2d.Graphics;
@@ -30,6 +29,14 @@ class Lander extends h2d.Bitmap {
         p = new h2d.Graphics(parent);
     }
 
+    public function getPoly() {
+        var polyWithOffset = new Array<h2d.col.Point>();
+        for (point in poly.points) {
+            polyWithOffset.push(new h2d.col.Point(point.x + x, point.y + y));
+        }
+        return polyWithOffset;
+    }
+
     public function update(dt: Float) {
         y += vy*dt;
         x += vx*dt;
@@ -50,8 +57,8 @@ class Lander extends h2d.Bitmap {
         
         p.clear();
         p.beginFill(0xD1CBCB);
-        for (point in poly.points) {
-            p.drawCircle(point.x + x, point.y + y, 2);
+        for (point in getPoly()) {
+            p.drawCircle(point.x, point.y, 1);
         }
     }
 }

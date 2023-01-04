@@ -11,7 +11,7 @@ class Game extends Screen {
     public function new(app: Main) {
         super(app);
         lander = new Lander(this);
-        ground = new Ground(this);
+        ground = new Ground(this, lander);
     }
 
     override public function update(dt: Float) {

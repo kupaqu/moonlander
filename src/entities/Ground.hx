@@ -8,12 +8,13 @@ class Ground extends h2d.Graphics {
     var seed: Int;
     var numOfSegments = 100;
     var segments: Array<CustomSegment>;
+    var lander: Lander;
 
-    public function new(parent: Screen) {
+    public function new(parent: Screen, lander: Lander) {
         super(parent);
         seed = Random.int(0, 1000);
         generateGround(parent);
-        y = 300;
+        this.lander = lander;
     }
 
     private function generateGround(parent: Screen) {
@@ -48,8 +49,12 @@ class Ground extends h2d.Graphics {
     public function update(dt: Float) {
         var size = Random.float(.5, 2.);
         clear();
-        lineStyle(size, 0xD1CBCB);
         for (segment in segments) {
+            if (segment.intersects(lander.getPoly())) {
+                lineStyle(size, 0xE50F0F);
+            } else {
+                lineStyle(size, 0xD1CBCB);
+            }
             moveTo(segment.x1, segment.y1);
             lineTo(segment.x2, segment.y2);
         };
