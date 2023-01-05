@@ -12,6 +12,14 @@ class Game extends Screen {
         super(app);
         lander = new Lander(this);
         ground = new Ground(this, lander);
+
+        addCamera(new Camera(), 0);
+        interactiveCamera = cameras[0];
+        removeCamera(cameras[1]);
+
+        camera.follow = lander;
+        camera.anchorX = 0.5;
+        camera.anchorY = 0.5;
     }
 
     override public function update(dt: Float) {

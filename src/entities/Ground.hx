@@ -50,7 +50,9 @@ class Ground extends h2d.Graphics {
         var size = Random.float(.5, 2.);
         clear();
         for (segment in segments) {
-            if (segment.intersects(lander.getPoly())) {
+            if (segment.y1 == segment.y2) {
+                lineStyle(size, 0x1BEC64);
+            } else if (segment.intersects(lander.getPoly())) {
                 lineStyle(size, 0xE50F0F);
             } else {
                 lineStyle(size, 0xD1CBCB);
