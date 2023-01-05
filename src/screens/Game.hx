@@ -20,6 +20,7 @@ class Game extends Screen {
         camera.follow = lander;
         camera.anchorX = 0.5;
         camera.anchorY = 0.5;
+        camera.scale(0.25, 0.25);
     }
 
     override public function update(dt: Float) {
