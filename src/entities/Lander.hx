@@ -3,17 +3,19 @@ package entities;
 import screens.*;
 
 class Lander extends h2d.Bitmap {
-    var g: Float = 9.8;
+    var g: Float = 20;
     var vy: Float;
     var vx: Float;
     var poly: h2d.col.Polygon;
+    var rotationAngle = 0.05;
 
     var p: h2d.Graphics;
 
-    var engineAcceleration: Float = 9.8*20;
+    var engineAcceleration: Float = 50;
 
     public function new(parent: Screen) {
         super(hxd.Res.loader.load('ufo.png').toTile(), parent);
+        scale(0.75);
         tile.dx -= tile.width/2;
         tile.dy -= tile.height/2;
         x = hxd.Window.getInstance().width / 2;
@@ -41,17 +43,17 @@ class Lander extends h2d.Bitmap {
         y += vy*dt;
         x += vx*dt;
 
-        if (hxd.Key.isPressed(hxd.Key.UP)) {
+        if (hxd.Key.isDown(hxd.Key.UP)) {
             vy -= Math.sin(rotation+Math.PI/2)*engineAcceleration*dt;
             vx -= Math.cos(rotation+Math.PI/2)*engineAcceleration*dt;
         }
-        if (hxd.Key.isPressed(hxd.Key.RIGHT)) {
-            rotate(0.01);
-            for (point in poly.points) point.rotate(0.01);
+        if (hxd.Key.isDown(hxd.Key.RIGHT)) {
+            rotate(rotationAngle);
+            for (point in poly.points) point.rotate(rotationAngle);
         }
-        if (hxd.Key.isPressed(hxd.Key.LEFT)) {
-            rotate(-0.01);
-            for (point in poly.points) point.rotate(-0.01);
+        if (hxd.Key.isDown(hxd.Key.LEFT)) {
+            rotate(-rotationAngle);
+            for (point in poly.points) point.rotate(-rotationAngle);
         }
         vy += g*dt;
         

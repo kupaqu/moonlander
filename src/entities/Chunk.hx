@@ -64,13 +64,13 @@ class Chunk extends h2d.Graphics {
         
         if (lander.x >= segments[0].x1 && lander.x <= segments[segments.length-1].x2) {
             if (minDist < 100) {
-                screen.camera.scaleX = 2;
-                screen.camera.scaleY = 2;
+                screen.camera.scaleX = 1.5;
+                screen.camera.scaleY = 1.5;
             } else if (minDist >= 100) {
-                screen.camera.scaleX = 0.5;
-                screen.camera.scaleY = 0.5;
+                screen.camera.scaleX = 0.75;
+                screen.camera.scaleY = 0.75;
             }
         }
-        
+
     }
 }
