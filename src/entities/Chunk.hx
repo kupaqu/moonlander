@@ -8,13 +8,15 @@ class Chunk extends h2d.Graphics {
     var seed: Int;
     var chunkSize: Int;
     var segments: Array<CustomSegment>;
+    var screen: Screen;
 
     public function new(parent: Screen, id: Int, seed: Int, chunkSize: Int) {
         super(parent);
         this.id = id;
         this.seed = seed;
         this.chunkSize = chunkSize;
-        segments = new Array<CustomSegment>();
+        this.segments = new Array<CustomSegment>();
+        this.screen = parent;
         generate(parent);
     }
 
@@ -43,14 +45,32 @@ class Chunk extends h2d.Graphics {
     }
 
     public function update(dt: Float, lander: Lander, size: Float) {
+        
+        var landerPoint = new h2d.col.Point(lander.x, lander.y);
+        var minDist = Math.POSITIVE_INFINITY;
+        
         clear();
         for (segment in segments) {
-            if (segment.y1 == segment.y2) lineStyle(size, 0x1BEC64); // место для посадки
-            else if (segment.intersects(lander.getPoly())) lineStyle(size, 0xE50F0F);
+            if (segment.intersects(lander.getPoly())) lineStyle(size, 0xE50F0F);
+            else if (segment.y1 == segment.y2) lineStyle(size, 0x1BEC64); // место для посадки
             else lineStyle(size, 0xD1CBCB);
 
             moveTo(segment.x1, segment.y1);
             lineTo(segment.x2, segment.y2);
+
+            var dist = segment.dist(landerPoint);
+            if (dist < minDist) minDist = dist;
         };
+        
+        if (lander.x >= segments[0].x1 && lander.x <= segments[segments.length-1].x2) {
+            if (minDist < 100) {
+                screen.camera.scaleX = 2;
+                screen.camera.scaleY = 2;
+            } else if (minDist >= 100) {
+                screen.camera.scaleX = 0.5;
+                screen.camera.scaleY = 0.5;
+            }
+        }
+        
     }
 }

@@ -7,12 +7,14 @@ class CustomSegment {
     public var y1: Float;
     public var x2: Float;
     public var y2: Float;
+    var mid: h2d.col.Point;
 
     public function new(parent: Screen, x1: Float, y1: Float, x2: Float, y2: Float) {        
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        mid = new h2d.col.Point((x1+x2)/2, (y1+y2)/2);
     }
     
     // коллизия между двумя линиями
@@ -30,6 +32,10 @@ class CustomSegment {
         var bottom = collide(poly.points[2].x, poly.points[2].y, poly.points[3].x, poly.points[3].y);
         var left = collide(poly.points[3].x, poly.points[3].y, poly.points[0].x, poly.points[0].y);
         return up || right || bottom || left;
+    }
+
+    public function dist(point: h2d.col.Point) {
+        return mid.distance(point);
     }
 
 }
