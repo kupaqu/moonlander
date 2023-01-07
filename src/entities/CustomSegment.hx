@@ -8,6 +8,7 @@ class CustomSegment {
     public var x2: Float;
     public var y2: Float;
     var mid: h2d.col.Point;
+    public var landable = false;
 
     public function new(parent: Screen, x1: Float, y1: Float, x2: Float, y2: Float) {        
         this.x1 = x1;
@@ -15,6 +16,7 @@ class CustomSegment {
         this.x2 = x2;
         this.y2 = y2;
         mid = new h2d.col.Point((x1+x2)/2, (y1+y2)/2);
+        if (y1 == y2) landable = true;
     }
     
     // коллизия между двумя линиями

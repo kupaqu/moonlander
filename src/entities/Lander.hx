@@ -4,10 +4,12 @@ import screens.*;
 
 class Lander extends h2d.Bitmap {
     var g: Float = 20;
-    var vy: Float;
-    var vx: Float;
+    public var vy = 0.;
+    public var vx = 0.;
     var poly: h2d.col.Polygon;
-    var rotationAngle = 0.05;
+    var rotationAngle = 0.025;
+    public var acceptableAngle = 0.3;
+    public var fuel: Float;
 
     var p: h2d.Graphics;
 

@@ -8,9 +8,10 @@ class Chunk extends h2d.Graphics {
     var seed: Int;
     var chunkSize: Int;
     var segments: Array<CustomSegment>;
-    var screen: Screen;
+    var screen: Game;
+    var scaleDist = 150;
 
-    public function new(parent: Screen, id: Int, seed: Int, chunkSize: Int) {
+    public function new(parent: Game, id: Int, seed: Int, chunkSize: Int) {
         super(parent);
         this.id = id;
         this.seed = seed;
@@ -38,7 +39,7 @@ class Chunk extends h2d.Graphics {
             var y1 = points[i-1]*300;
             var x2 = id*hxd.Window.getInstance().width+i*(hxd.Window.getInstance().width/chunkSize);
             var y2 = points[i]*300;
-
+            
             var segment = new CustomSegment(parent, x1, y1, x2, y2);
             segments.push(segment);
         }
@@ -51,8 +52,13 @@ class Chunk extends h2d.Graphics {
         
         clear();
         for (segment in segments) {
-            if (segment.intersects(lander.getPoly())) lineStyle(size, 0xE50F0F);
-            else if (segment.y1 == segment.y2) lineStyle(size, 0x1BEC64); // место для посадки
+            if (segment.intersects(lander.getPoly())) {
+                if (segment.landable
+                    && lander.rotation <= lander.acceptableAngle
+                    && lander.rotation >= -lander.acceptableAngle) screen.mode = 1;
+                else screen.mode = 2;
+            }  
+            if (segment.landable) lineStyle(size, 0x1BEC64); // место для посадки
             else lineStyle(size, 0xD1CBCB);
 
             moveTo(segment.x1, segment.y1);
@@ -63,10 +69,10 @@ class Chunk extends h2d.Graphics {
         };
         
         if (lander.x >= segments[0].x1 && lander.x <= segments[segments.length-1].x2) {
-            if (minDist < 100) {
+            if (minDist < scaleDist) {
                 screen.camera.scaleX = 1.5;
                 screen.camera.scaleY = 1.5;
-            } else if (minDist >= 100) {
+            } else if (minDist >= scaleDist) {
                 screen.camera.scaleX = 0.75;
                 screen.camera.scaleY = 0.75;
             }

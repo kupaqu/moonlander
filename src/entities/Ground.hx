@@ -9,9 +9,9 @@ class Ground {
     var chunkSize = 100;
     var chunks: Map<Int, Chunk>;
     var lander: Lander;
-    var screen: Screen;
+    var screen: Game;
 
-    public function new(parent: Screen, lander: Lander) {
+    public function new(parent: Game, lander: Lander) {
         seed = Random.int(0, 1000);
         chunks = new Map<Int, Chunk>();
         this.lander = lander;
@@ -31,7 +31,7 @@ class Ground {
 
     public function update(dt: Float) {
         checkChunks();
-        var size = Random.float(2., 5.);
+        var size = Random.float(1.5, 3.);
         for (chunk in chunks) chunk.update(dt, lander, size);
     }
 }
