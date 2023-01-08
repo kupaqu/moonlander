@@ -55,8 +55,8 @@ class Chunk extends h2d.Graphics {
             if (segment.intersects(lander.getPoly())) {
                 if (segment.landable
                     && lander.rotation <= lander.acceptableAngle
-                    && lander.rotation >= -lander.acceptableAngle) screen.mode = 1;
-                else screen.mode = 2;
+                    && lander.rotation >= -lander.acceptableAngle) screen.mode = 1; // удачная посадка
+                else screen.mode = 2; // провальная посадка
             }  
             if (segment.landable) lineStyle(size, 0x1BEC64); // место для посадки
             else lineStyle(size, 0xD1CBCB);

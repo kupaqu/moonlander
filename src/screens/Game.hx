@@ -26,10 +26,6 @@ class Game extends Screen {
         camera.anchorY = 0.5;
         camera.scaleX = 0.75;
         camera.scaleY = 0.75;
-
-        // gui = new Gui(app);
-        // var text = new h2d.Text(hxd.res.DefaultFont.get(), gui);
-        // text.text = 'Hello World!';
     }
 
     override function render(engine: h3d.Engine) {

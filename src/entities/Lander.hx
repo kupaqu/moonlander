@@ -9,7 +9,7 @@ class Lander extends h2d.Bitmap {
     var poly: h2d.col.Polygon;
     var rotationAngle = 0.025;
     public var acceptableAngle = 0.3;
-    public var fuel: Float;
+    public var fuel = 1000.;
 
     var p: h2d.Graphics;
 
@@ -21,7 +21,7 @@ class Lander extends h2d.Bitmap {
         tile.dx -= tile.width/2;
         tile.dy -= tile.height/2;
         x = hxd.Window.getInstance().width / 2;
-        y = hxd.Window.getInstance().height / 2;
+        y = -250;
 
         var b = getBounds();
         poly = new h2d.col.Polygon([
@@ -45,19 +45,22 @@ class Lander extends h2d.Bitmap {
         y += vy*dt;
         x += vx*dt;
 
-        if (hxd.Key.isDown(hxd.Key.UP)) {
+        if (hxd.Key.isDown(hxd.Key.UP) && fuel > 0.) {
             vy -= Math.sin(rotation+Math.PI/2)*engineAcceleration*dt;
             vx -= Math.cos(rotation+Math.PI/2)*engineAcceleration*dt;
+            fuel -= 0.2;
         }
-        if (hxd.Key.isDown(hxd.Key.RIGHT)) {
+        if (hxd.Key.isDown(hxd.Key.RIGHT) && rotation * 180/Math.PI <= 90) {
             rotate(rotationAngle);
             for (point in poly.points) point.rotate(rotationAngle);
         }
-        if (hxd.Key.isDown(hxd.Key.LEFT)) {
+        if (hxd.Key.isDown(hxd.Key.LEFT) && rotation * 180/Math.PI >= -90) {
             rotate(-rotationAngle);
             for (point in poly.points) point.rotate(-rotationAngle);
         }
+
         vy += g*dt;
+        vx *= 0.99;
         
         p.clear();
         p.beginFill(0xD1CBCB);
