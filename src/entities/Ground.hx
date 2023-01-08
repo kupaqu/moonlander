@@ -31,7 +31,7 @@ class Ground {
 
     public function update(dt: Float) {
         checkChunks();
-        var size = Random.float(1.5, 3.);
+        var size = Random.float(1., 2.);
         for (chunk in chunks) chunk.update(dt, lander, size);
     }
 }

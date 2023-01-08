@@ -7,7 +7,8 @@ class Game extends Screen {
     var lander: Lander;
     var ground: Ground;
     var gui: Gui;
-    public var mode = 0;
+    var hint: h2d.Text;
+    public var mode = -1;
 
     public function new(app: Main) {
         super(app);
@@ -16,6 +17,13 @@ class Game extends Screen {
         lander = new Lander(this);
         ground = new Ground(this, lander);
         gui = new Gui(app, lander);
+
+        hint = new h2d.Text(hxd.res.DefaultFont.get(), gui);
+        hint.textAlign = Center;
+        hint.x = hxd.Window.getInstance().width/2;
+        hint.scale(2);
+        hint.y = hint.textHeight*2;
+        hint.text = 'PRESS SPACE TO START.';
 
         addCamera(new h2d.Camera(), 0);
         interactiveCamera = cameras[0];
@@ -33,29 +41,44 @@ class Game extends Screen {
         gui.render(engine);
     }
 
+    public function reset() {
+        lander.reset();
+        mode = 0;
+    }
+
     override public function update(dt: Float) {
-        lander.update(dt);
-        ground.update(dt);
         gui.update(dt);
-        // if (mode == 0) {
-        //     lander.update(dt);
-        //     ground.update(dt);
-        // }
-        // if (mode == 1) {
-        //     var text = new h2d.Text(hxd.res.DefaultFont.get(), this);
-        //     text.scale(2);
-        //     text.text = 'YOU WIN! ${lander.rotation}';
-        //     text.x = lander.x;
-        //     text.y = lander.y;
-        //     mode = 3;
-        // }
-        // if (mode == 2) {
-        //     var text = new h2d.Text(hxd.res.DefaultFont.get(), this);
-        //     text.scale(2);
-        //     text.text = 'YOU LOSE! ${lander.rotation}';
-        //     text.x = lander.x;
-        //     text.y = lander.y;
-        //     mode = 3;
-        // }
+
+        if (lander.fuel < 200) {
+            gui.displayWarning();
+        }
+        
+        if (mode == -1) {
+            ground.update(dt);
+            if (hxd.Key.isDown(hxd.Key.SPACE)) {
+                hint.visible = false;
+                mode = 0;
+            }
+        } else if (mode == 0) {
+            lander.update(dt);
+            ground.update(dt);
+        } else if (mode == 1) {
+            gui.score += 100;
+            gui.displayResult(true);
+            reset();
+            if (lander.fuel <= 0) {
+                lander.fuel = 1000;
+                gui.score = 0;
+            }
+            mode = 0;
+        } else if (mode == 2) {
+            gui.displayResult(false);
+            reset();
+            if (lander.fuel <= 0) {
+                lander.fuel = 1000;
+                gui.score = 0;
+            }
+            mode = 0;
+        }
     }
 }

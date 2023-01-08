@@ -31,6 +31,17 @@ class Lander extends h2d.Bitmap {
             new h2d.col.Point(b.x - x, b.yMax - y)
         ]);
         p = new h2d.Graphics(parent);
+
+        vx = 10.;
+    }
+
+    public function reset() {
+        x = hxd.Window.getInstance().width / 2;
+        y = -250;
+        rotation = 0;
+
+        vx = 10.;
+        vy = 0.;
     }
 
     public function getPoly() {
@@ -60,7 +71,6 @@ class Lander extends h2d.Bitmap {
         }
 
         vy += g*dt;
-        vx *= 0.99;
         
         p.clear();
         p.beginFill(0xD1CBCB);
