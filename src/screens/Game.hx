@@ -14,6 +14,8 @@ class Game extends Screen {
         super(app);
         defaultSmooth = true;
 
+        hxd.Res.song.play(true, 0.8);
+
         lander = new Lander(this);
         ground = new Ground(this, lander);
         gui = new Gui(app, lander);
@@ -23,7 +25,7 @@ class Game extends Screen {
         hint.x = hxd.Window.getInstance().width/2;
         hint.scale(2);
         hint.y = hint.textHeight*2;
-        hint.text = 'PRESS SPACE TO START.';
+        hint.text = 'PRESS SPACE TO START.\nLAND ON GREEN SEGMENTS.';
 
         addCamera(new h2d.Camera(), 0);
         interactiveCamera = cameras[0];

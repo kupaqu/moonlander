@@ -36,6 +36,8 @@ class Lander extends h2d.Bitmap {
     }
 
     public function reset() {
+        for (point in poly.points) point.rotate(-rotation);
+        
         x = hxd.Window.getInstance().width / 2;
         y = -250;
         rotation = 0;
